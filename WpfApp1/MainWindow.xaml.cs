@@ -25,6 +25,8 @@ namespace inputValidation
 
             if (count > 1 || count < 1)
                 MessageBox.Show("Неверный адрес", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            else
+                File.AppendAllText("employee.txt", Email.Text);
         }
     }
 }
