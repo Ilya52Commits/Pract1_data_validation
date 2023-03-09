@@ -17,9 +17,7 @@ namespace inputValidation
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             int count = 0;
-
             Regex regex = new Regex(@"(@)");
-
             MatchCollection email = regex.Matches(Email.Text);
 
             foreach (Match match in email)
