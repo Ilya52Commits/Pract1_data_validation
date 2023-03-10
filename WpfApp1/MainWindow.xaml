@@ -5,31 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:inputValidation"
         mc:Ignorable="d"
-        Title="Алло" Height="527" Width="547">
+        Title="MainWindow" Height="527" Width="547">
     <Grid Margin="3,0,0,-3">
         <!--Identifier-->
         <TextBlock HorizontalAlignment="Left" Margin="30,32,0,0" TextWrapping="Wrap" Text="Идентификатор*" VerticalAlignment="Top" Height="20" Width="95"/>
-        <TextBox x:Name="identifier" HorizontalAlignment="Left" Height="25" Margin="30,52,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="195"/>
+        <TextBox x:Name="Identifier" HorizontalAlignment="Left" Height="25" Margin="30,52,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="195"/>
 
         <!--Surname-->
         <TextBlock HorizontalAlignment="Left" Margin="30,89,0,0" TextWrapping="Wrap" Text="Фамилия*" VerticalAlignment="Top"/>
-        <TextBox x:Name="surname" HorizontalAlignment="Left" Height="23" Margin="30,107,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="195"/>
+        <TextBox x:Name="Surname" HorizontalAlignment="Left" Height="23" Margin="30,107,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="195"/>
 
         <!--Name-->
         <TextBlock HorizontalAlignment="Left" Margin="30,149,0,0" TextWrapping="Wrap" Text="Имя*" VerticalAlignment="Top"/>
-        <TextBox x:Name="name" HorizontalAlignment="Left" Height="23" Margin="30,169,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="195"/>
+        <TextBox x:Name="Name" HorizontalAlignment="Left" Height="23" Margin="30,169,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="195"/>
 
         <!--Middle name-->
         <TextBlock HorizontalAlignment="Left" Margin="30,209,0,0" TextWrapping="Wrap" Text="Отчество" VerticalAlignment="Top"/>
-        <TextBox x:Name="middleName" HorizontalAlignment="Left" Height="23" Margin="30,227,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="195"/>
+        <TextBox x:Name="MiddleName" HorizontalAlignment="Left" Height="23" Margin="30,227,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="195"/>
 
         <!--Passport-->
         <TextBlock HorizontalAlignment="Left" Margin="30,267,0,0" TextWrapping="Wrap" Text="Паспорт (серия и номер)*" VerticalAlignment="Top"/>
-        <TextBox x:Name="passport" HorizontalAlignment="Left" Height="23" Margin="30,287,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="195"/>
+        <TextBox x:Name="Passport" HorizontalAlignment="Left" Height="23" Margin="30,287,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="195"/>
 
         <!--Mobile phone-->
         <TextBlock HorizontalAlignment="Left" Margin="29,329,0,0" TextWrapping="Wrap" Text="Мобильный телефон" VerticalAlignment="Top"/>
-        <TextBox x:Name="mobPhone" HorizontalAlignment="Left" Height="23" Margin="30,349,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="195"/>
+        <TextBox x:Name="MobPhone" HorizontalAlignment="Left" Height="23" Margin="30,349,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="195"/>
 
         <!--Email-->
         <TextBlock HorizontalAlignment="Left" Margin="30,389,0,0" TextWrapping="Wrap" Text="Email*" VerticalAlignment="Top"/>
