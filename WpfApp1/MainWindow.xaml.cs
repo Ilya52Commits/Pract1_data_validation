@@ -22,15 +22,15 @@ namespace inputValidation
             string textPasport = Passport.Text;
             string textEmail = Email.Text;
 
-            if (string.IsNullOrWhiteSpace(textIdentiti) ||
-                string.IsNullOrWhiteSpace(textName) ||
-                string.IsNullOrWhiteSpace(textSurname) ||
-                string.IsNullOrWhiteSpace(textPasport) ||
-                string.IsNullOrWhiteSpace(textEmail))
-            {
-                MessageBox.Show("Введены некоректные данные", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+            //if (string.IsNullOrWhiteSpace(textIdentiti) ||
+            //    string.IsNullOrWhiteSpace(textName) ||
+            //    string.IsNullOrWhiteSpace(textSurname) ||
+            //    string.IsNullOrWhiteSpace(textPasport) ||
+            //    string.IsNullOrWhiteSpace(textEmail))
+            //{
+            //    MessageBox.Show("Введены некоректные данные", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            //    return;
+            //}
 
             // mail check 
             if (!textEmail.Contains("@"))
