@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Text.RegularExpressions;
 using System.IO;
+using System.Windows.Media; 
 
 
 namespace inputValidation
@@ -16,10 +17,11 @@ namespace inputValidation
         // function of the button
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string textIdentiti = Identifier.Text;
+            string textID = Identifier.Text;
             string textName = Name.Text;
             string textSurname = Surname.Text;
             string textPasport = Passport.Text;
+            string textPhone = MobPhone.Text; 
             string textEmail = Email.Text;
 
             //if (string.IsNullOrWhiteSpace(textIdentiti) ||
@@ -32,42 +34,124 @@ namespace inputValidation
             //    return;
             //}
 
-            // mail check 
-            if (!textEmail.Contains("@"))
+            // condition for mail
+            if (_checkEmail(textEmail) == true)
             {
-                MessageBox.Show("Неверный адрес1", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                MobPhone.BorderBrush = Brushes.Gray;
+                MessageBox.Show("Данные сохранены", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                File.AppendAllText("employee.txt", textEmail);
+                Email.Text = null;
             }
+            else
+                Email.BorderBrush = Brushes.Red;
 
-            string[] delimiter = textEmail.Split('@');
+            // condition for phone
+            if (_checkPhone(textPhone) == true)
+            {
+                MobPhone.BorderBrush = Brushes.Gray;
+                MessageBox.Show("Данные сохранены", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                File.AppendAllText("employee.txt", textPhone);
+                MobPhone.Text = null;
+            }
+            else
+                MobPhone.BorderBrush = Brushes.Red;
 
+            // condition for pasport
+            if (_checkPasport(textPasport) == true)
+            {
+                Passport.BorderBrush = Brushes.Gray;
+                MessageBox.Show("Данные сохранены", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                File.AppendAllText("employee.txt", textPhone);
+                Passport.Text = null;
+            }
+            else
+                Passport.BorderBrush = Brushes.Red;
+        }
+
+        // functions used
+        // mail check 
+        private static bool _checkEmail(string email)
+        {
+            if (!email.Contains("@"))
+                return false;
+
+            string[] delimiter = email.Split('@');
             if (delimiter.Length != 2)
-            {
-                MessageBox.Show("Неверный адрес2", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+                return false;
 
             string login = delimiter[0];
             string domain = delimiter[1];
 
-            char firstSymbol = login[0];
+            if (login.Length == 0 || domain.Length == 0)
+                return false;
 
-            if (!Regex.IsMatch(firstSymbol.ToString(), @"[a-z]"))
-            {
-                MessageBox.Show("Введены некоректные данные", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+            char firstSymbol = login[0];
+            if (!Regex.IsMatch(firstSymbol.ToString(), @"[a-z]") || !Regex.IsMatch(firstSymbol.ToString(), @"[A-Z]"))
+                return false;
 
             string[] arrDobain = domain.Split('.');
-
             if (arrDobain.Length != 2)
+                return false;
+
+            return true;
+        }
+
+        // phone check
+        private static bool _checkPhone(string phone)
+        {
+            if (Regex.IsMatch(phone.ToString(), @"[a-z]") || Regex.IsMatch(phone.ToString(), @"[A-Z]"))
+                return false;
+
+            switch (phone[0]) 
             {
-                MessageBox.Show("Неверный адрес3", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                case '8':
+                    if (phone.Length != 11)
+                        return false;
+                    break;
+                case '+':
+                    if (phone.Length != 12 && phone[1] != '7')
+                        return false; 
+                    break;
+                default:
+                    return false;
             }
 
-            File.AppendAllText("employee.txt", textEmail);
-            MessageBox.Show("Данные сохранены", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+            return true; 
         }
+
+        // pasport check
+        private static bool _checkPasport(string pasport)
+        {
+            if (Regex.IsMatch(pasport.ToString(), @"[a-z]") || Regex.IsMatch(pasport.ToString(), @"[A-Z]"))
+                return false;
+
+            string[] arrPasport;
+            try
+            {
+                arrPasport = pasport.Split(' ');
+            }
+            catch
+            {
+                return false;
+            }
+
+            string series = arrPasport[0];
+            if (series.Length != 4) 
+                return false;
+
+            string number = arrPasport[1];
+            if (number.Length != 6)
+                return false;
+
+            return true; 
+        }
+
+        // identity check
+        private static bool _checkID(string id)
+        {
+
+
+            return true;
+        } 
     }
 }
