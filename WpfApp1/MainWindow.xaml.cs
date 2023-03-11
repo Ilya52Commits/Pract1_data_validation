@@ -1,8 +1,10 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using System.Text.RegularExpressions;
+﻿using System;
 using System.IO;
-using System.Windows.Media; 
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Windows;
+using static System.Net.Mime.MediaTypeNames;
+using System.Windows.Controls;
 
 
 namespace inputValidation
@@ -14,58 +16,78 @@ namespace inputValidation
     {
         public MainWindow() { InitializeComponent(); }
 
+        private string _file = "employee.txt";
+
         // function of the button
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             string textID = Identifier.Text;
-            string textName = Name.Text;
             string textSurname = Surname.Text;
+            string textName = Name.Text;
+            string textMidlName = MiddleName.Text;
             string textPasport = Passport.Text;
             string textPhone = MobPhone.Text; 
             string textEmail = Email.Text;
 
-            //if (string.IsNullOrWhiteSpace(textIdentiti) ||
-            //    string.IsNullOrWhiteSpace(textName) ||
-            //    string.IsNullOrWhiteSpace(textSurname) ||
-            //    string.IsNullOrWhiteSpace(textPasport) ||
-            //    string.IsNullOrWhiteSpace(textEmail))
-            //{
-            //    MessageBox.Show("Введены некоректные данные", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-            //    return;
-            //}
-
-            // condition for mail
-            if (_checkEmail(textEmail) == true)
+            if (string.IsNullOrWhiteSpace(textID) ||
+                string.IsNullOrWhiteSpace(textName) ||
+                string.IsNullOrWhiteSpace(textSurname) ||
+                string.IsNullOrWhiteSpace(textPasport) ||
+                string.IsNullOrWhiteSpace(textEmail))
             {
-                MobPhone.BorderBrush = Brushes.Gray;
-                MessageBox.Show("Данные сохранены", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
-                File.AppendAllText("employee.txt", textEmail);
-                Email.Text = null;
+                MessageBox.Show("Введены некоректные данные", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
             else
-                Email.BorderBrush = Brushes.Red;
-
-            // condition for phone
-            if (_checkPhone(textPhone) == true)
             {
-                MobPhone.BorderBrush = Brushes.Gray;
-                MessageBox.Show("Данные сохранены", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
-                File.AppendAllText("employee.txt", textPhone);
-                MobPhone.Text = null;
-            }
-            else
-                MobPhone.BorderBrush = Brushes.Red;
+                if (_checkEmail(textEmail) && 
+                    _checkPhone(textPhone) &&
+                    _checkPasport(textPasport))
+                {
+                    File.AppendAllText(_file, "ID: " + textID + " ");
+                    File.AppendAllText(_file, "Surname: " + textSurname + " ");
+                    File.AppendAllText(_file, "Name: " + textName + " ");
+                    File.AppendAllText(_file, "Patronymic: " + textMidlName + " ");
+                    File.AppendAllText(_file, "Passport: " + textPasport + " ");
+                    File.AppendAllText(_file, "Phone: " + textPhone + " ");
+                    File.AppendAllText(_file, "Email: " + textEmail + " ");
+                    File.AppendAllText(_file, "\n");
+                }
+                // condition for mail
+                //if (_checkEmail(textEmail))
+                //{
+                //    MobPhone.BorderBrush = Brushes.Gray;
+                //    MessageBox.Show("Данные сохранены", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                //    File.AppendAllText("employee.txt", textEmail);
+                //    Email.Text = null;
+                //}
+                //else
+                //    Email.BorderBrush = Brushes.Red;
 
-            // condition for pasport
-            if (_checkPasport(textPasport) == true)
-            {
-                Passport.BorderBrush = Brushes.Gray;
-                MessageBox.Show("Данные сохранены", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
-                File.AppendAllText("employee.txt", textPhone);
-                Passport.Text = null;
+                //// condition for phone
+                //if (_checkPhone(textPhone))
+                //{
+                //    MobPhone.BorderBrush = Brushes.Gray;
+                //    MessageBox.Show("Данные сохранены", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                //    File.AppendAllText("employee.txt", textPhone);
+                //    MobPhone.Text = null;
+                //}
+                //else
+                //    MobPhone.BorderBrush = Brushes.Red;
+
+                //// condition for pasport
+                //if (_checkPasport(textPasport))
+                //{
+                //    Passport.BorderBrush = Brushes.Gray;
+                //    MessageBox.Show("Данные сохранены", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                //    File.AppendAllText("employee.txt", textPhone);
+                //    Passport.Text = null;
+                //}
+                //else
+                //    Passport.BorderBrush = Brushes.Red;
             }
-            else
-                Passport.BorderBrush = Brushes.Red;
+
+            _checkID(textID);
         }
 
         // functions used
@@ -149,9 +171,21 @@ namespace inputValidation
         // identity check
         private static bool _checkID(string id)
         {
+            string[] fileContains = new string[] { };
+            try
+            {
+                fileContains = File.ReadAllLines("employee.txt");
+            }
+            catch
+            {
+                return true;
+            }
 
-
+            foreach (string line in fileContains)
+            {
+                //if (line.Split()[])
+            }
             return true;
-        } 
+        }
     }
 }
