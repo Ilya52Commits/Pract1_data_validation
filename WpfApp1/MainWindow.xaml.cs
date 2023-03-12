@@ -1,11 +1,7 @@
-﻿using System;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
-using static System.Net.Mime.MediaTypeNames;
-using System.Windows.Controls;
-
+using System.Windows.Media;
 
 namespace inputValidation
 {
@@ -16,7 +12,7 @@ namespace inputValidation
     {
         public MainWindow() { InitializeComponent(); }
 
-        private string _file = "employee.txt";
+        public string _file = "employee.txt";
 
         // function of the button
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -24,70 +20,67 @@ namespace inputValidation
             string textID = Identifier.Text;
             string textSurname = Surname.Text;
             string textName = Name.Text;
-            string textMidlName = MiddleName.Text;
-            string textPasport = Passport.Text;
+            string textPatronymic = Patronymic.Text;
+            string textPassport = Passport.Text;
             string textPhone = MobPhone.Text; 
             string textEmail = Email.Text;
 
             if (string.IsNullOrWhiteSpace(textID) ||
                 string.IsNullOrWhiteSpace(textName) ||
                 string.IsNullOrWhiteSpace(textSurname) ||
-                string.IsNullOrWhiteSpace(textPasport) ||
+                string.IsNullOrWhiteSpace(textPassport) ||
                 string.IsNullOrWhiteSpace(textEmail))
-            {
                 MessageBox.Show("Введены некоректные данные", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
             else
             {
-                if (_checkEmail(textEmail) && 
+                if (_checkID(textID) &&
+                    _checkNSP(textName, textSurname, textPatronymic) &&
+                    _checkPasport(textPassport) &&
                     _checkPhone(textPhone) &&
-                    _checkPasport(textPasport))
+                    _checkEmail(textEmail))
                 {
-                    File.AppendAllText(_file, "ID: " + textID + " ");
-                    File.AppendAllText(_file, "Surname: " + textSurname + " ");
-                    File.AppendAllText(_file, "Name: " + textName + " ");
-                    File.AppendAllText(_file, "Patronymic: " + textMidlName + " ");
-                    File.AppendAllText(_file, "Passport: " + textPasport + " ");
-                    File.AppendAllText(_file, "Phone: " + textPhone + " ");
-                    File.AppendAllText(_file, "Email: " + textEmail + " ");
+                    File.AppendAllText(_file, "ID " + textID + " ");
+                    Identifier.BorderBrush = Brushes.Gray;
+                    Identifier.Text = null;
+                    File.AppendAllText(_file, "Surname " + textSurname + " ");
+                    Surname.BorderBrush = Brushes.Gray;
+                    Surname.Text = null;
+                    File.AppendAllText(_file, "Name " + textName + " ");
+                    Name.BorderBrush = Brushes.Gray;
+                    Name.Text = null;
+                    File.AppendAllText(_file, "Patronymic " + textPatronymic + " ");
+                    Patronymic.BorderBrush = Brushes.Gray;
+                    Patronymic.Text = null;
+                    File.AppendAllText(_file, "Passport " + textPassport + " ");
+                    Passport.BorderBrush = Brushes.Gray;
+                    Passport.Text = null;
+                    File.AppendAllText(_file, "Phone " + textPhone + " ");
+                    MobPhone.BorderBrush = Brushes.Gray;
+                    MobPhone.Text = null;
+                    File.AppendAllText(_file, "Email " + textEmail);
+                    Email.BorderBrush = Brushes.Gray;
+                    Email.Text = null;
                     File.AppendAllText(_file, "\n");
+                    MessageBox.Show("Данные сохранены", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
-                // condition for mail
-                //if (_checkEmail(textEmail))
-                //{
-                //    MobPhone.BorderBrush = Brushes.Gray;
-                //    MessageBox.Show("Данные сохранены", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
-                //    File.AppendAllText("employee.txt", textEmail);
-                //    Email.Text = null;
-                //}
-                //else
-                //    Email.BorderBrush = Brushes.Red;
-
-                //// condition for phone
-                //if (_checkPhone(textPhone))
-                //{
-                //    MobPhone.BorderBrush = Brushes.Gray;
-                //    MessageBox.Show("Данные сохранены", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
-                //    File.AppendAllText("employee.txt", textPhone);
-                //    MobPhone.Text = null;
-                //}
-                //else
-                //    MobPhone.BorderBrush = Brushes.Red;
-
-                //// condition for pasport
-                //if (_checkPasport(textPasport))
-                //{
-                //    Passport.BorderBrush = Brushes.Gray;
-                //    MessageBox.Show("Данные сохранены", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
-                //    File.AppendAllText("employee.txt", textPhone);
-                //    Passport.Text = null;
-                //}
-                //else
-                //    Passport.BorderBrush = Brushes.Red;
+                else
+                {
+                    if (!_checkID(textID))
+                        Identifier.BorderBrush = Brushes.Red;
+                    if (!_checkNSP(textName, textSurname, textPatronymic))
+                    {
+                        Name.BorderBrush = Brushes.Red;
+                        Surname.BorderBrush = Brushes.Red;
+                        Patronymic.BorderBrush = Brushes.Red;
+                    }
+                    if (!_checkPasport(textPassport))
+                        Passport.BorderBrush = Brushes.Red;
+                    if (!_checkPhone(textPhone))
+                        MobPhone.BorderBrush = Brushes.Red;
+                    if (!_checkEmail(textEmail))
+                        Email.BorderBrush = Brushes.Red;
+                }
             }
-
-            _checkID(textID);
         }
 
         // functions used
@@ -108,7 +101,7 @@ namespace inputValidation
                 return false;
 
             char firstSymbol = login[0];
-            if (!Regex.IsMatch(firstSymbol.ToString(), @"[a-z]") || !Regex.IsMatch(firstSymbol.ToString(), @"[A-Z]"))
+            if (Regex.IsMatch(firstSymbol.ToString(), @"[A-Z][a-z]"))
                 return false;
 
             string[] arrDobain = domain.Split('.');
@@ -121,7 +114,7 @@ namespace inputValidation
         // phone check
         private static bool _checkPhone(string phone)
         {
-            if (Regex.IsMatch(phone.ToString(), @"[a-z]") || Regex.IsMatch(phone.ToString(), @"[A-Z]"))
+            if (Regex.IsMatch(phone.ToString(), @"[a-z]!@#\/") || Regex.IsMatch(phone.ToString(), @"[A-Z]!@#\/"))
                 return false;
 
             switch (phone[0]) 
@@ -144,18 +137,12 @@ namespace inputValidation
         // pasport check
         private static bool _checkPasport(string pasport)
         {
-            if (Regex.IsMatch(pasport.ToString(), @"[a-z]") || Regex.IsMatch(pasport.ToString(), @"[A-Z]"))
+            if (Regex.IsMatch(pasport.ToString(), @"[a-z]!@#\/") || Regex.IsMatch(pasport.ToString(), @"[A-Z]!@#\/"))
                 return false;
 
-            string[] arrPasport;
-            try
-            {
-                arrPasport = pasport.Split(' ');
-            }
-            catch
-            {
+            string[] arrPasport = pasport.Split(' '); ;
+            if (arrPasport.Length != 2)
                 return false;
-            }
 
             string series = arrPasport[0];
             if (series.Length != 4) 
@@ -171,21 +158,34 @@ namespace inputValidation
         // identity check
         private static bool _checkID(string id)
         {
-            string[] fileContains = new string[] { };
-            try
-            {
-                fileContains = File.ReadAllLines("employee.txt");
-            }
-            catch
-            {
-                return true;
-            }
+            string[] fileContains = File.ReadAllLines("employee.txt");
 
             foreach (string line in fileContains)
             {
-                //if (line.Split()[])
+                if (line.Split()[0] == "ID ")
+                {
+                    if (line.Split()[1] == id)
+                        return false;
+                }
             }
+
             return true;
+        }
+
+        // checking the name, surname and patronymic
+        private static bool _checkNSP(string name, string surname, string patronymic)
+        {
+            if ((!Regex.IsMatch(name.ToString(), @"[А-Я]") || !Regex.IsMatch(name.ToString(), @"[а-я]")) ||
+                (!Regex.IsMatch(surname.ToString(), @"[А-Я]") || !Regex.IsMatch(surname.ToString(), @"[а-я]")) ||
+                (!Regex.IsMatch(patronymic.ToString(), @"[А-Я]") || !Regex.IsMatch(patronymic.ToString(), @"[а-я]")))
+                return false;
+
+            if (!(name[0] == name.ToUpper()[0]) ||
+                !(surname[0] == surname.ToUpper()[0]) ||
+                !(patronymic[0] == patronymic.ToUpper()[0]))
+                return false; 
+
+            return true; 
         }
     }
 }
