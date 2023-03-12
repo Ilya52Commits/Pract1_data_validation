@@ -1,0 +1,27 @@
+﻿<Window x:Class="WpfApp1.Window1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="Window1" Height="510" Width="598">
+    <Grid Margin="0,0,-1,0" RenderTransformOrigin="0.5,0.5">
+        <Grid.RenderTransform>
+            <TransformGroup>
+                <ScaleTransform/>
+                <SkewTransform/>
+                <RotateTransform Angle="0.026"/>
+                <TranslateTransform/>
+            </TransformGroup>
+        </Grid.RenderTransform>
+        <TextBlock HorizontalAlignment="Center" Margin="0,236,0,0" TextWrapping="Wrap" Text="Логин" VerticalAlignment="Top" Height="34" Width="71" FontSize="24"/>
+        <TextBox HorizontalAlignment="Center" Margin="0,270,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="318" Height="37" FontSize="22"/>
+
+        <TextBlock HorizontalAlignment="Center" Margin="0,311,0,0" TextWrapping="Wrap" Text="Пароль" VerticalAlignment="Top" Height="35" Width="94" FontSize="24"/>
+        <TextBox HorizontalAlignment="Center" Margin="0,346,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="318" Height="36" FontSize="22"/>
+        <Button Content="Проверить" HorizontalAlignment="Center" Margin="0,395,0,0" VerticalAlignment="Top" Height="53" Width="238" FontSize="22"/>
+        <Image HorizontalAlignment="Left" Height="100" Margin="248,99,0,0" VerticalAlignment="Top" Width="100"/>
+        <Image Margin="222,62,220,275" Source="/Picture_4.png" Stretch="Fill"/>
+    </Grid>
+</Window>
