@@ -162,7 +162,7 @@ namespace inputValidation
 
             foreach (string line in fileContains)
             {
-                if (line.Split()[0] == "ID ")
+                if (line.Split()[0] == "ID")
                 {
                     if (line.Split()[1] == id)
                         return false;
