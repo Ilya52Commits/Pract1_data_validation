@@ -9,7 +9,7 @@ namespace inputValidation
     {
         public MainWindow() { InitializeComponent(); }
 
-        public string _file = "employee.txt";
+        private static string _file = "employee.txt";
 
         // function of the button
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -151,7 +151,7 @@ namespace inputValidation
         // pasport check
         private static bool _checkPasport(string pasport)
         {
-            if (Regex.IsMatch(pasport.ToString(), @"[a-z]!@#\/") || Regex.IsMatch(pasport.ToString(), @"[A-Z]!@#\/"))
+            if (!Regex.IsMatch(pasport.ToString(), @"[0-9]"))
                 return false;
 
             string[] arrPasport = pasport.Split(' '); ;
@@ -175,7 +175,7 @@ namespace inputValidation
             if (!(Regex.IsMatch(id.ToString(), @"[0-9]")))
                 return false; 
 
-            string[] fileContains = File.ReadAllLines("employee.txt");
+            string[] fileContains = File.ReadAllLines(_file);
             foreach (string line in fileContains)
             {
                 if (line.Split()[0] == "ID")
