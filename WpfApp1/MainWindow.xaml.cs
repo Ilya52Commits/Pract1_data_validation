@@ -5,9 +5,6 @@ using System.Windows.Media;
 
 namespace inputValidation
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow() { InitializeComponent(); }
@@ -22,15 +19,32 @@ namespace inputValidation
             string textName = Name.Text;
             string textPatronymic = Patronymic.Text;
             string textPassport = Passport.Text;
-            string textPhone = MobPhone.Text; 
+            string textPhone = MobPhone.Text;
             string textEmail = Email.Text;
 
             if (string.IsNullOrWhiteSpace(textID) ||
                 string.IsNullOrWhiteSpace(textName) ||
                 string.IsNullOrWhiteSpace(textSurname) ||
+                string.IsNullOrWhiteSpace(textPatronymic) ||
                 string.IsNullOrWhiteSpace(textPassport) ||
+                string.IsNullOrWhiteSpace(textPhone) ||
                 string.IsNullOrWhiteSpace(textEmail))
-                MessageBox.Show("Введены некоректные данные", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            {
+                if (string.IsNullOrWhiteSpace(textID))
+                    Identifier.BorderBrush = Brushes.Red;
+                if (string.IsNullOrWhiteSpace(textName))
+                    Name.BorderBrush = Brushes.Red;
+                if (string.IsNullOrWhiteSpace(textSurname))
+                    Surname.BorderBrush = Brushes.Red;
+                if (string.IsNullOrWhiteSpace(textPatronymic))
+                    Patronymic.BorderBrush = Brushes.Red;
+                if (string.IsNullOrWhiteSpace(textPassport))
+                    Passport.BorderBrush = Brushes.Red;
+                if (string.IsNullOrWhiteSpace(textPhone))
+                    MobPhone.BorderBrush = Brushes.Red;
+                if (string.IsNullOrWhiteSpace(textEmail))
+                    Email.BorderBrush = Brushes.Red;
+            }
             else
             {
                 if (_checkID(textID) &&
@@ -67,18 +81,18 @@ namespace inputValidation
                 {
                     if (!_checkID(textID))
                         Identifier.BorderBrush = Brushes.Red;
-                    if (!_checkNSP(textName, textSurname, textPatronymic))
-                    {
-                        Name.BorderBrush = Brushes.Red;
-                        Surname.BorderBrush = Brushes.Red;
-                        Patronymic.BorderBrush = Brushes.Red;
-                    }
                     if (!_checkPasport(textPassport))
                         Passport.BorderBrush = Brushes.Red;
                     if (!_checkPhone(textPhone))
                         MobPhone.BorderBrush = Brushes.Red;
                     if (!_checkEmail(textEmail))
                         Email.BorderBrush = Brushes.Red;
+                    if (!_checkNSP(textName, textSurname, textPatronymic))
+                    {
+                        Name.BorderBrush = Brushes.Red;
+                        Surname.BorderBrush = Brushes.Red;
+                        Patronymic.BorderBrush = Brushes.Red;
+                    }
                 }
             }
         }
@@ -158,8 +172,10 @@ namespace inputValidation
         // identity check
         private static bool _checkID(string id)
         {
-            string[] fileContains = File.ReadAllLines("employee.txt");
+            if (Regex.IsMatch(id.ToString(), @"[a-z]!@#\/") || Regex.IsMatch(id.ToString(), @"[A-Z]!@#\/"))
+                return false; 
 
+            string[] fileContains = File.ReadAllLines("employee.txt");
             foreach (string line in fileContains)
             {
                 if (line.Split()[0] == "ID")
