@@ -172,7 +172,7 @@ namespace inputValidation
         // identity check
         private static bool _checkID(string id)
         {
-            if (Regex.IsMatch(id.ToString(), @"[a-z]!@#\/") || Regex.IsMatch(id.ToString(), @"[A-Z]!@#\/"))
+            if (!(Regex.IsMatch(id.ToString(), @"[0-9]")))
                 return false; 
 
             string[] fileContains = File.ReadAllLines("employee.txt");
