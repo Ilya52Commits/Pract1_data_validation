@@ -7,7 +7,7 @@ namespace inputValidation
 {
     public partial class MainWindow : Window
     {
-        public MainWindow() => InitializeComponent();
+        public MainWindow() { InitializeComponent(); }
 
         private static string _file = "employee.txt";
 

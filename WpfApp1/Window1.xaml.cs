@@ -1,50 +1,27 @@
-﻿using inputValidation;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace WpfApp1
 {
+    /// <summary>
+    /// Логика взаимодействия для Window1.xaml
+    /// </summary>
     public partial class Window1 : Window
     {
-        public Window1() => InitializeComponent();
-
-        private static string _lineKey = "employee";
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        public Window1()
         {
-            MainWindow mainWindow = new MainWindow(); 
-            Window window = new Window();
-
-            string textLogin = Login.Text;
-            string textPassword = Password.Password;
-
-            int numberAttempts = 0; 
-            while (true)
-            {
-                if (numberAttempts < 3)
-                {
-                    if (textLogin == _lineKey && textPassword == _lineKey)
-                    {
-                        mainWindow.Show();
-                        window.Close();
-                        break;
-                    }
-                    else
-                    {
-                        if (textLogin != _lineKey)
-                            Login.BorderBrush = Brushes.Red; 
-                        if (textPassword != _lineKey)
-                            Password.BorderBrush = Brushes.Red;
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Введено слишном много попыток", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    break;
-                }
-                    
-                numberAttempts++;
-            }
+            InitializeComponent();
         }
     }
 }
