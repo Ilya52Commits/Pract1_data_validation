@@ -4,9 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
+        WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        Title="Window1" Height="510" Width="598">
-    <Grid Margin="0,0,-1,0" RenderTransformOrigin="0.5,0.5">
+        Title="Window1" Height="566" Width="598">
+    <Grid Margin="0,0,-1,1" RenderTransformOrigin="0.5,0.5">
         <Grid.RenderTransform>
             <TransformGroup>
                 <ScaleTransform/>
@@ -15,13 +16,19 @@
                 <TranslateTransform/>
             </TransformGroup>
         </Grid.RenderTransform>
-        <TextBlock HorizontalAlignment="Center" Margin="0,236,0,0" TextWrapping="Wrap" Text="Логин" VerticalAlignment="Top" Height="34" Width="71" FontSize="24"/>
-        <TextBox HorizontalAlignment="Center" Margin="0,270,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="318" Height="37" FontSize="22"/>
+        <!--logo-->
+        <Image Margin="220,62,220,341" Source="/Picture_4.png" Stretch="Fill"/>
 
-        <TextBlock HorizontalAlignment="Center" Margin="0,311,0,0" TextWrapping="Wrap" Text="Пароль" VerticalAlignment="Top" Height="35" Width="94" FontSize="24"/>
-        <TextBox HorizontalAlignment="Center" Margin="0,346,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="318" Height="36" FontSize="22"/>
-        <Button Content="Проверить" HorizontalAlignment="Center" Margin="0,395,0,0" VerticalAlignment="Top" Height="53" Width="238" FontSize="22"/>
-        <Image HorizontalAlignment="Left" Height="100" Margin="248,99,0,0" VerticalAlignment="Top" Width="100"/>
-        <Image Margin="222,62,220,275" Source="/Picture_4.png" Stretch="Fill"/>
+        <!--login input field-->
+        <TextBlock HorizontalAlignment="Center" Margin="0,236,0,0" TextWrapping="Wrap" Text="Логин" VerticalAlignment="Top" Height="34" Width="71" FontSize="24"/>
+        <TextBox x:Name="Login" HorizontalAlignment="Center" Margin="0,270,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="286" Height="30" FontSize="22"/>
+
+        <!--password input field-->
+        <TextBlock HorizontalAlignment="Left" Margin="258,312,0,0" TextWrapping="Wrap" Text="Пароль" VerticalAlignment="Top" Height="35" Width="94" FontSize="24"/>
+        <StackPanel>
+            <PasswordBox x:Name="Password" MaxLength="64" MinHeight="30" Margin="147,348,143,166" Width="286" Height="30" FontSize="22"/>
+        </StackPanel>
+        <!--verification button-->
+        <Button Content="Проверить" HorizontalAlignment="Left" Margin="202,402,0,0" VerticalAlignment="Top" Height="43" Width="191" FontSize="22" Click="Button_Click"/>
     </Grid>
 </Window>
