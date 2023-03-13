@@ -1,8 +1,7 @@
 ﻿using System;
-using inputValidation;
-using System.Data;
 using System.Windows;
 using System.Windows.Media;
+using inputValidation;
 
 namespace WpfApp1
 {
