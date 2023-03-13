@@ -1,4 +1,6 @@
-﻿using inputValidation;
+﻿using System;
+using inputValidation;
+using System.Data;
 using System.Windows;
 using System.Windows.Media;
 
@@ -9,46 +11,67 @@ namespace WpfApp1
         public Window1() => InitializeComponent();
 
         private static string _lineKey = "employee";
+        private static int _counter = 0;
+        MainWindow mainWindow = new MainWindow(); 
+        Window window = new Window();
+        DateTime Time;
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow(); 
-            Window window = new Window();
-
             string textLogin = Login.Text;
             string textPassword = Password.Password;
 
-            int numberAttempts = 0; 
-            while (numberAttempts < 3) 
-            {
-                if (numberAttempts < 3)
-                {
-                    if (textLogin == _lineKey && textPassword == _lineKey)
-                    {
-                        mainWindow.Show();
-                        window.Close();
-                        break;
-                    }
-                    else
-                    {
-                        if (textLogin != _lineKey)
-                            Login.BorderBrush = Brushes.Red; 
-                        if (textPassword != _lineKey)
-                            Password.BorderBrush = Brushes.Red;
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Введено слишном много попыток", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    break;
-                }
-                    
-                numberAttempts++;
-            }
-
-
+            if (_toTriger() == true)
+                _checkLoginPassword();
         }
 
+        private bool _checkLoginPassword()
+        {
+            if (Login.Text == _lineKey && Password.Password == _lineKey)
+            {
+                mainWindow.Show();
+                window.Close();
+                return true;
+            }
+            else
+            {
+                if (Login.Text != _lineKey)
+                    Login.BorderBrush = Brushes.Red;
+                if (Password.Password != _lineKey)
+                    Password.BorderBrush = Brushes.Red;
+                return false; 
+            } 
+        }
 
+        public bool _toTriger()
+        {
+            if (_counter == 3)
+            {
+                TimeSpan time = DateTime.Now - Time;
+
+                if (time.TotalSeconds < 60)
+                {
+                    MessageBox.Show($"Осталось {60 - (int)time.TotalSeconds}");
+                    return false;
+                }
+
+                _counter = 0;
+            }
+            if (Login.Text.Trim() == _lineKey || Password.Password.Trim() == _lineKey) 
+            {
+                _counter = 0;
+                return true; 
+            }
+
+            _counter = (_counter + 1) % 4;
+
+            if (_counter == 3)
+            {
+                Time = DateTime.Now;
+                MessageBox.Show("Вы - долбоёб!", "Хватит вводить хуйню!", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false; 
+            }
+            return true; 
+        }
     }
 }
