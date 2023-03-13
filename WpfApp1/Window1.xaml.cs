@@ -19,7 +19,7 @@ namespace WpfApp1
             string textPassword = Password.Password;
 
             int numberAttempts = 0; 
-            while (true)
+            while (numberAttempts < 3) 
             {
                 if (numberAttempts < 3)
                 {
@@ -45,6 +45,10 @@ namespace WpfApp1
                     
                 numberAttempts++;
             }
+
+
         }
+
+
     }
 }
