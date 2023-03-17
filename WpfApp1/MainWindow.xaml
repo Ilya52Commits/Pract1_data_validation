@@ -6,37 +6,38 @@
         xmlns:local="clr-namespace:inputValidation"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        Title="MainWindow" Height="527" Width="547">
+        Title="MainWindow" Height="527" Width="547" Background="#FFFFF500">
     <Grid Margin="3,0,0,-3">
         <!--Identifier-->
-        <TextBlock HorizontalAlignment="Left" Margin="30,32,0,0" TextWrapping="Wrap" Text="Идентификатор*" VerticalAlignment="Top" Height="20" Width="95"/>
+        <TextBlock HorizontalAlignment="Left" Margin="30,32,0,0" TextWrapping="Wrap" Text="Идентификатор*" VerticalAlignment="Top" Height="20" Width="95" FontSize="14" FontFamily="Comic Sans MS"/>
         <TextBox x:Name="Identifier" HorizontalAlignment="Left" Height="25" Margin="30,52,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="195"/>
 
         <!--Surname-->
-        <TextBlock HorizontalAlignment="Left" Margin="30,89,0,0" TextWrapping="Wrap" Text="Фамилия*" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="30,89,0,0" TextWrapping="Wrap" Text="Фамилия*" VerticalAlignment="Top" FontSize="14" FontFamily="Comic Sans MS"/>
         <TextBox x:Name="Surname" HorizontalAlignment="Left" Height="23" Margin="30,107,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="195"/>
 
         <!--Name-->
-        <TextBlock HorizontalAlignment="Left" Margin="30,149,0,0" TextWrapping="Wrap" Text="Имя*" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="30,149,0,0" TextWrapping="Wrap" Text="Имя*" VerticalAlignment="Top" FontSize="14" FontFamily="Comic Sans MS"/>
         <TextBox x:Name="Name" HorizontalAlignment="Left" Height="23" Margin="30,169,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="195"/>
 
         <!--Patronymic-->
-        <TextBlock HorizontalAlignment="Left" Margin="30,209,0,0" TextWrapping="Wrap" Text="Отчество" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="30,209,0,0" TextWrapping="Wrap" Text="Отчество" VerticalAlignment="Top" FontSize="14" FontFamily="Comic Sans MS"/>
         <TextBox x:Name="Patronymic" HorizontalAlignment="Left" Height="23" Margin="30,227,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="195"/>
 
         <!--Passport-->
-        <TextBlock HorizontalAlignment="Left" Margin="30,267,0,0" TextWrapping="Wrap" Text="Паспорт (серия и номер)*" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="30,267,0,0" TextWrapping="Wrap" Text="Паспорт (серия и номер)*" VerticalAlignment="Top" FontSize="14" FontFamily="Comic Sans MS"/>
         <TextBox x:Name="Passport" HorizontalAlignment="Left" Height="23" Margin="30,287,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="195"/>
 
         <!--Mobile phone-->
-        <TextBlock HorizontalAlignment="Left" Margin="29,329,0,0" TextWrapping="Wrap" Text="Мобильный телефон" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="29,329,0,0" TextWrapping="Wrap" Text="Мобильный телефон" VerticalAlignment="Top" FontSize="14" FontFamily="Comic Sans MS"/>
         <TextBox x:Name="MobPhone" HorizontalAlignment="Left" Height="23" Margin="30,349,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="195"/>
 
         <!--Email-->
-        <TextBlock HorizontalAlignment="Left" Margin="30,389,0,0" TextWrapping="Wrap" Text="Email*" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="30,389,0,0" TextWrapping="Wrap" Text="Email*" VerticalAlignment="Top" FontSize="14" FontFamily="Comic Sans MS"/>
         <TextBox x:Name="Email" HorizontalAlignment="Left" Height="23" Margin="30,407,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="195"/>
 
         <!--Button-->
-        <Button x:Name="button" Content="Создать сотрудника" HorizontalAlignment="Left" Margin="315,225,0,0" VerticalAlignment="Top" Width="135" Height="40" Click="Button_Click"/>
+        <Button x:Name="button" Content="Создать сотрудника" HorizontalAlignment="Left" Margin="272,202,0,0" VerticalAlignment="Top" Width="204" Height="73" Click="Button_Click" Background="#FFD48E2B" FontSize="18" FontFamily="Comic Sans MS" FontWeight="Bold"/>
+        <Button Content="Вернуться назад" HorizontalAlignment="Left" Margin="272,298,0,0" VerticalAlignment="Top" Height="62" Width="204" Click="Button_Click_1" Background="#FFD60606" FontSize="20" FontFamily="Comic Sans MS" FontWeight="Bold"/>
     </Grid>
 </Window>

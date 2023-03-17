@@ -2,14 +2,15 @@
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Media;
+using WpfApp1;
 
 namespace inputValidation
 {
     public partial class MainWindow : Window
     {
+        private string _file = "employee.txt";
+        //private Window1 _window1 = new Window1();
         public MainWindow() => InitializeComponent();
-
-        private static string _file = "employee.txt";
 
         // function of the button
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -47,11 +48,11 @@ namespace inputValidation
             }
             else
             {
-                if (_checkID(textID) &&
-                    _checkNSP(textName, textSurname, textPatronymic) &&
-                    _checkPasport(textPassport) &&
-                    _checkPhone(textPhone) &&
-                    _checkEmail(textEmail))
+                if (CheckID(textID) &&
+                    CheckNSP(textName, textSurname, textPatronymic) &&
+                    CheckPasport(textPassport) &&
+                    CheckPhone(textPhone) &&
+                    CheckEmail(textEmail))
                 {
                     File.AppendAllText(_file, "ID " + textID + " ");
                     Identifier.BorderBrush = Brushes.Gray;
@@ -79,15 +80,15 @@ namespace inputValidation
                 }
                 else
                 {
-                    if (!_checkID(textID))
+                    if (!CheckID(textID))
                         Identifier.BorderBrush = Brushes.Red;
-                    if (!_checkPasport(textPassport))
+                    if (!CheckPasport(textPassport))
                         Passport.BorderBrush = Brushes.Red;
-                    if (!_checkPhone(textPhone))
+                    if (!CheckPhone(textPhone))
                         MobPhone.BorderBrush = Brushes.Red;
-                    if (!_checkEmail(textEmail))
+                    if (!CheckEmail(textEmail))
                         Email.BorderBrush = Brushes.Red;
-                    if (!_checkNSP(textName, textSurname, textPatronymic))
+                    if (!CheckNSP(textName, textSurname, textPatronymic))
                     {
                         Name.BorderBrush = Brushes.Red;
                         Surname.BorderBrush = Brushes.Red;
@@ -99,7 +100,7 @@ namespace inputValidation
 
         // functions used
         // mail check 
-        private static bool _checkEmail(string email)
+        private bool CheckEmail(string email)
         {
             if (!email.Contains("@"))
                 return false;
@@ -126,12 +127,12 @@ namespace inputValidation
         }
 
         // phone check
-        private static bool _checkPhone(string phone)
+        private bool CheckPhone(string phone)
         {
             if (Regex.IsMatch(phone.ToString(), @"[a-z]!@#\/") || Regex.IsMatch(phone.ToString(), @"[A-Z]!@#\/"))
                 return false;
 
-            switch (phone[0]) 
+            switch (phone[0])
             {
                 case '8':
                     if (phone.Length != 11)
@@ -139,17 +140,17 @@ namespace inputValidation
                     break;
                 case '+':
                     if (phone.Length != 12 && phone[1] != '7')
-                        return false; 
+                        return false;
                     break;
                 default:
                     return false;
             }
 
-            return true; 
+            return true;
         }
 
         // pasport check
-        private static bool _checkPasport(string pasport)
+        private bool CheckPasport(string pasport)
         {
             if (!Regex.IsMatch(pasport.ToString(), @"[0-9]"))
                 return false;
@@ -159,21 +160,21 @@ namespace inputValidation
                 return false;
 
             string series = arrPasport[0];
-            if (series.Length != 4) 
+            if (series.Length != 4)
                 return false;
 
             string number = arrPasport[1];
             if (number.Length != 6)
                 return false;
 
-            return true; 
+            return true;
         }
 
         // identity check
-        private static bool _checkID(string id)
+        private bool CheckID(string id)
         {
             if (!(Regex.IsMatch(id.ToString(), @"[0-9]")))
-                return false; 
+                return false;
 
             string[] fileContains = File.ReadAllLines(_file);
             foreach (string line in fileContains)
@@ -189,7 +190,7 @@ namespace inputValidation
         }
 
         // checking the name, surname and patronymic
-        private static bool _checkNSP(string name, string surname, string patronymic)
+        private bool CheckNSP(string name, string surname, string patronymic)
         {
             if ((!Regex.IsMatch(name.ToString(), @"[А-Я]") || !Regex.IsMatch(name.ToString(), @"[а-я]")) ||
                 (!Regex.IsMatch(surname.ToString(), @"[А-Я]") || !Regex.IsMatch(surname.ToString(), @"[а-я]")) ||
@@ -199,9 +200,15 @@ namespace inputValidation
             if (!(name[0] == name.ToUpper()[0]) ||
                 !(surname[0] == surname.ToUpper()[0]) ||
                 !(patronymic[0] == patronymic.ToUpper()[0]))
-                return false; 
+                return false;
 
-            return true; 
+            return true;
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            //_window1.Show();
+            //Close();
         }
     }
 }
