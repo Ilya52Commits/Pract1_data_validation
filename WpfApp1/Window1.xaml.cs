@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -8,52 +9,58 @@ namespace WpfApp1
 {
     public partial class Window1 : Window
     {
+        private CancellationTokenSource _isAuthorizationWindowOpened = new CancellationTokenSource(); // погуглить тип данных 
+        private DispatcherTimer _timer = new DispatcherTimer();
+        private string _lineKey = "employee";
+        public MainWindow _mainWindow = new MainWindow();
+        private DateTime _time;
+        private int _counter = 0;
+        private int _seconds = 0;
+
         public Window1()
         {
             InitializeComponent();
-            timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Start();
-            timer.Tick += new EventHandler(_timerTick);
+            _timer.Interval = TimeSpan.FromSeconds(1);
+            _timer.Start();
+            _timer.Tick += new EventHandler(TimerTick);
         }
-
-        DispatcherTimer timer = new DispatcherTimer();
-        private static string _lineKey = "employee";
-        private static int _counter = 0;
-        MainWindow mainWindow = new MainWindow(); 
-        Window window = new Window();
-        DateTime Time;
-        long seconds = 0;  
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             string textLogin = Login.Text;
             string textPassword = Password.Password;
 
-            if (_toTriger() == true)
-                _checkLoginPassword();
-        }
-
-        private void _timerTick(object sender, EventArgs e)
-        {
-            seconds++;
-
-            if (seconds == 60)
+            if (ToTriger() == true)
             {
-                var message = MessageBox.Show($"Уже прошла минута, а вы не ввели данные.\nЗакрыть программу?", "Привышение ожидания", MessageBoxButton.OKCancel);
-                if (message == MessageBoxResult.OK)
-                    Close();
-                seconds = 0;
+                _timer.Stop();
+                CheckLoginPassword();
             }
         }
 
-        private bool _checkLoginPassword()
+        private void TimerTick(object sender, EventArgs e)
+        {
+            _seconds++;
+            if (_seconds == 10)
+            {
+                var message = MessageBox.Show($"Уже прошла минута, а вы не ввели данные.\nЗакрыть программу?", "Привышение ожидания", MessageBoxButton.OKCancel);
+                if (message == MessageBoxResult.OK)
+                {
+                    _timer.Stop();
+                    Close();
+                    _timer.Dispatcher.DisableProcessing();
+                }
+                _seconds = 0;
+            }
+        }
+
+        private bool CheckLoginPassword()
         {
             if (Login.Text == _lineKey && Password.Password == _lineKey)
             {
-                mainWindow.Show();
-                window.Close();
+                _mainWindow.Show();
+                _timer.Stop();
+                _timer.Dispatcher.DisableProcessing();
                 Close();
-                timer.Stop();
                 return true;
             }
             else
@@ -66,12 +73,11 @@ namespace WpfApp1
             } 
         }
 
-        public bool _toTriger()
+        public bool ToTriger()
         {
             if (_counter == 3)
             {
-                TimeSpan time = DateTime.Now - Time;
-
+                TimeSpan time = DateTime.Now - _time;
                 if (time.TotalSeconds < 60)
                 {
                     MessageBox.Show($"Осталось {60 - (int)time.TotalSeconds}");
@@ -87,11 +93,10 @@ namespace WpfApp1
             }
 
             _counter = (_counter + 1) % 4;
-
             if (_counter == 3)
             {
-                Time = DateTime.Now;
-                MessageBox.Show("Вы - долбоёб!", "Хватит вводить хуйню!", MessageBoxButton.OK, MessageBoxImage.Error);
+                _time = DateTime.Now;
+                MessageBox.Show("Неправильные данные", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false; 
             }
             return true; 
