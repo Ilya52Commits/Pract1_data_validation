@@ -8,13 +8,13 @@ namespace inputValidation
 {
     public partial class MainWindow : Window
     {
-        private string _file = "employee.txt";
+        private static string _file = "employee.txt";
         private static readonly Window1 _window1 = new Window1();
-        public Window1 window1 = _window1;
+        //public Window1 window1 = _window1;
 
         public MainWindow() => InitializeComponent();
 
-        // functions of the buttons
+        // function of the button
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             string textID = Identifier.Text;
@@ -99,16 +99,15 @@ namespace inputValidation
                 }
             }
         }
-
-        private void ButtonBack_Click(object sender, RoutedEventArgs e)
+        private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            window1.Show();
+            _window1.Show();
             Close();
         }
 
         // functions used
         // mail check 
-        private bool CheckEmail(string email)
+        private static bool CheckEmail(string email)
         {
             if (!email.Contains("@"))
                 return false;
@@ -124,16 +123,16 @@ namespace inputValidation
                 return false;
 
             char firstSymbol = login[0];
-            if (Regex.IsMatch(firstSymbol.ToString(), @"[A-Z]"))
+            if (Regex.IsMatch(firstSymbol.ToString(), @"[A-Z][a-z]"))
                 return false;
 
             try
             {
                 Regex.IsMatch(email, @"^[A-Z]([\w.-]+)@([\w-]+)((.(\w){2,5})+)$", RegexOptions.IgnoreCase);
             }
-            catch 
+            catch
             {
-                return false;   
+                return false;
             }
 
             string[] arrDobain = domain.Split('.');
@@ -144,7 +143,7 @@ namespace inputValidation
         }
 
         // phone check
-        private bool CheckPhone(string phone)
+        private static bool CheckPhone(string phone)
         {
             string testPhone = "";
             if (phone[0] == '+')
@@ -161,7 +160,7 @@ namespace inputValidation
             if (Regex.IsMatch(testPhone.ToString(), @"\D"))
                 return false;
 
-            switch (phone[0]) 
+            switch (phone[0])
             {
                 case '8':
                     if (phone.Length != 11)
@@ -169,17 +168,15 @@ namespace inputValidation
                     break;
                 case '+':
                     if (phone.Length != 12 && phone[1] != '7')
-                        return false; 
+                        return false;
                     break;
-                default:
-                    return false;
             }
 
-            return true; 
+            return true;
         }
 
         // pasport check
-        private bool CheckPasport(string pasport)
+        private static bool CheckPasport(string pasport)
         {
             if (Regex.IsMatch(pasport.ToString(), @"\D"))
                 return false;
@@ -189,25 +186,25 @@ namespace inputValidation
                 return false;
 
             string series = arrPasport[0];
-            if (series.Length != 4) 
+            if (series.Length != 4)
                 return false;
 
             string number = arrPasport[1];
             if (number.Length != 6)
                 return false;
 
-            return true; 
+            return true;
         }
 
         // identity check
-        private bool CheckID(string id)
+        private static bool CheckID(string id)
         {
-            if (Regex.IsMatch(id.ToString(), @"\D")) 
+            if (Regex.IsMatch(id.ToString(), @"\D"))
                 return false;
 
             string[] fileContains = File.ReadAllLines(_file);
             foreach (string line in fileContains)
-            {   
+            {
                 if (line.Split()[0] == "ID")
                 {
                     if (line.Split()[1] == id)
@@ -219,7 +216,7 @@ namespace inputValidation
         }
 
         // checking the name, surname and patronymic
-        private bool CheckNSP(string name, string surname, string patronymic)
+        private static bool CheckNSP(string name, string surname, string patronymic)
         {
             if ((!Regex.IsMatch(name.ToString(), @"[А-Я]") || !Regex.IsMatch(name.ToString(), @"[а-я]")) ||
                 (!Regex.IsMatch(surname.ToString(), @"[А-Я]") || !Regex.IsMatch(surname.ToString(), @"[а-я]")) ||
@@ -227,11 +224,12 @@ namespace inputValidation
                 return false;
 
             if (!(name[0] == name.ToUpper()[0]) ||
-                !(surname[0] == surname.ToUpper()[0]) ||    
+                !(surname[0] == surname.ToUpper()[0]) ||
                 !(patronymic[0] == patronymic.ToUpper()[0]))
-                return false; 
+                return false;
 
-            return true; 
+            return true;
         }
+
     }
 }
