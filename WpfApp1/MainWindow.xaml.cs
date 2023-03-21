@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Text.RegularExpressions;
 using WpfApp1;
+using System.Linq;
 
 namespace inputValidation
 {
@@ -143,31 +144,25 @@ namespace inputValidation
         // phone check
         private static bool CheckPhone(string phone)
         {
-            string testPhone = "";
-            if (phone[0] == '+')
-            {
-                for (int i = 1; i < phone.Length; i++)
-                    testPhone += phone[i];
-            }
-            else if (phone[0] == '8')
-            {
-                for (int i = 0; i < phone.Length; i++)
-                    testPhone += phone[i];
-            }
-
-            if (Regex.IsMatch(testPhone.ToString(), @"\D"))
-                return false;
-
-            switch (phone[0])
+            switch (phone[0]) // проверка первого символа
             {
                 case '8':
-                    if (phone.Length != 11)
+                    if (Regex.IsMatch(phone.ToString(), @"\D")) // проверка на наличие в строке посторонних символов
+                        return false;
+                    if (phone.Length != 11) // пороверяем длину 
                         return false;
                     break;
                 case '+':
-                    if (phone.Length != 12 && phone[1] != '7')
+                    string testPhone = "";
+                    for (int i = 1; i < phone.Length; i++) // перезаписываем номер без "+"
+                        testPhone += phone[i];
+                    if (Regex.IsMatch(testPhone.ToString(), @"\D")) // проверка на наличие в строке посторонних символов
+                        return false;
+                    if (phone.Length != 12 && phone[1] != '7') // пороверяем длину 
                         return false;
                     break;
+                default:
+                    return false;
             }
 
             return true;
@@ -176,10 +171,8 @@ namespace inputValidation
         // pasport check
         private static bool CheckPasport(string pasport)
         {
-            if (Regex.IsMatch(pasport.ToString(), @"\D"))
-                return false;
-
-            string[] arrPasport = pasport.Split(' '); ;
+            string pasportTest = ""; 
+            string[] arrPasport = pasport.Split(' ');
             if (arrPasport.Length != 2)
                 return false;
 
@@ -189,6 +182,15 @@ namespace inputValidation
 
             string number = arrPasport[1];
             if (number.Length != 6)
+                return false;
+
+            for (int i = 0; i < pasport.Length; i++)
+            {
+                if (pasport[i] == ' ')
+                    i++;
+                pasportTest += pasport[i]; 
+            }
+            if (Regex.IsMatch(pasportTest.ToString(), @"\D"))
                 return false;
 
             return true;
@@ -224,6 +226,11 @@ namespace inputValidation
             if (!(name[0] == name.ToUpper()[0]) ||
                 !(surname[0] == surname.ToUpper()[0]) ||
                 !(patronymic[0] == patronymic.ToUpper()[0]))
+                return false;
+
+            if (!name.Skip(1).All(char.IsLower) || 
+                !surname.Skip(1).All(char.IsLower) || 
+                !patronymic.Skip(1).All(char.IsLower))
                 return false;
 
             return true;
