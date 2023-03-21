@@ -1,7 +1,7 @@
 ﻿using System.IO;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Media;
+using System.Text.RegularExpressions;
 using WpfApp1;
 
 namespace inputValidation
@@ -9,8 +9,6 @@ namespace inputValidation
     public partial class MainWindow : Window
     {
         private static string _file = "employee.txt";
-        private static readonly Window1 _window1 = new Window1();
-        //public Window1 window1 = _window1;
 
         public MainWindow() => InitializeComponent();
 
@@ -101,7 +99,7 @@ namespace inputValidation
         }
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            _window1.Show();
+            new Window1().Show();
             Close();
         }
 
@@ -230,6 +228,5 @@ namespace inputValidation
 
             return true;
         }
-
     }
 }

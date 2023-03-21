@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Media;
-using System.ComponentModel;
 using System.Windows.Threading;
-using System.Threading; // погуглить, что это за блиблиотека 
 using inputValidation;
 
 namespace WpfApp1
 {
     public partial class Window1 : Window
     {
-        private CancellationTokenSource _isAuthorizationWindowOpened = new CancellationTokenSource(); // погуглить тип данных 
         private DispatcherTimer _timer = new DispatcherTimer();
-        private MainWindow _mainWindow = new MainWindow();
         private DateTime _time;
         private string _lineKey = "employee";
         private int _counter = 0;
@@ -37,14 +33,13 @@ namespace WpfApp1
                 _timer.Stop();
                 CheckLoginPassword();
             }
-
         }
 
         // function of timer
         private void TimerTick(object sender, EventArgs e)
         {
             _seconds++;
-            if (_seconds == 10)
+            if (_seconds == 60)
             {
                 var message = MessageBox.Show($"Уже прошла минута, а вы не ввели данные.\nЗакрыть программу?", "Привышение ожидания", MessageBoxButton.OKCancel);
                 if (message == MessageBoxResult.OK)
@@ -61,7 +56,7 @@ namespace WpfApp1
         {
             if (Login.Text == _lineKey && Password.Password == _lineKey)
             {
-                _mainWindow.Show();
+                new MainWindow().Show();
                 Close();
             }
             else
@@ -84,7 +79,6 @@ namespace WpfApp1
                     MessageBox.Show($"Осталось {60 - (int)time.TotalSeconds}");
                     return false;
                 }
-
                 _counter = 0;
             }
             if (Login.Text.Trim() == _lineKey || Password.Password.Trim() == _lineKey)
@@ -103,12 +97,5 @@ namespace WpfApp1
 
             return true;
         }
-
-        //private void ClosingForm(Object sender, EventArgs e)
-        //{
-
-        //}
     }
 }
-// перенести все переменные вначало проекта 
-// настроить кнопку крестик
